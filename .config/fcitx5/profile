@@ -1,0 +1,23 @@
+[Groups/0]
+# Group Name
+Name=デフォルト
+# Layout
+Default Layout=us-de_se_fi
+# Default Input Method
+DefaultIM=mozc
+
+[Groups/0/Items/0]
+# Name
+Name=keyboard-us-de_se_fi
+# Layout
+Layout=
+
+[Groups/0/Items/1]
+# Name
+Name=mozc
+# Layout
+Layout=
+
+[GroupOrder]
+0=デフォルト
+
