@@ -21,6 +21,7 @@
 
   # Set your time zone and Locale
   time.timeZone = "Europe/Berlin";
+  services.ntp.enable = true;
 
   i18n.defaultLocale = "en_US.UTF-8";
   i18n.extraLocaleSettings = {
@@ -75,6 +76,7 @@
     pcmanfm
     firefox
     mpv
+    calibre
     pavucontrol
     foot
     neofetch
@@ -91,12 +93,47 @@
     brightnessctl
     pamixer
     mate.engrampa
+    cargo
+    #rust
   ];
+
+  # battery services
+   services.upower.enable = true;
+   services.auto-cpufreq = {
+     enable = true;
+     settings = {
+       battery = {
+         governor = "powersave";
+         turbo = "never";
+       };
+       charger = {
+         governor = "performance";
+         turbo = "auto";
+       };
+     };
+   };
+
+  # Host Samba share
+  services.samba-wsdd.enable = true;
+  services.samba = {
+    enable = true;
+    securityType = "user";
+    shares.global = {
+      "server min protocol" = "SMB2_02";
+    };
+    shares.NIXLAP13 = {
+      path = "/home/lap"; #BAD
+      writeable = "yes";
+      browseable = "yes";
+      "read only" = "no";
+      "guest ok" = "yes";
+    };
+  };
 
   # List services that you want to enable:
    programs.zsh.enable = true;
    services.openssh.enable = true;
-   services.tlp.enable = true;
+   programs.steam.enable = true;
 
   # Fonts
   fonts.packages = with pkgs; [

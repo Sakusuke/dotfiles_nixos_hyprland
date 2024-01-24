@@ -7,6 +7,10 @@ ZSH_THEME="eastwood"
 source $ZSH/oh-my-zsh.sh
 #source $HOME/.config/lf/icons
 
+if [ -z "$DISPLAY" ] && [ "$XDG_VTNR" = 1 ]; then
+  exec Hyprland
+fi
+
 export PATH="$HOME/.bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/.cargo/bin:$PATH"
@@ -15,6 +19,11 @@ if [ ! -d /tmp/del ]; then
   mkdir -p /tmp/del
 fi
 
+alias c="clear"
+alias v="vim"
+alias n="sudo vim /etc/nixos/configuration.nix"
+alias z='vim ~/.zshrc'
+alias h="vim ~/.config/hypr/hyprland.conf"
 alias en="LANG="en_US.UTF-8""
 alias jp="LANG="ja_JP.UTF-8""
 alias kill="sudo killall -KILL"
@@ -31,9 +40,8 @@ alias m="sudo mount"
 alias um="sudo umount"
 alias eject="sudo eject"
 alias pb="xclip -selection clipboard -out"
-alias c="clear"
 alias clip="xclip -selection clipboard"
-alias n="nnn"
+
 alias pc="setsid &>/dev/null devour pcmanfm"
 alias spc="sudo setsid &>/dev/null devour sudo pcmanfm"
 alias sx="startx"
@@ -45,7 +53,6 @@ alias bck='cd "$OLDPWD"'
 alias df='df -H'
 alias mkdir='mkdir -p'
 alias hist='vim ~/.zsh_history'
-alias z='vim ~/.zshrc'
 alias sxiv='sxiv -a'
 alias t="trash"
 alias c2f="clip2file"
@@ -53,7 +60,6 @@ alias ce="commandedit"
 alias f="setsid &>/dev/null"
 alias d="sleep 1 &&"
 alias de="setsid &>/dev/null devour"
-alias v="vim"
 alias sv="sudo vim"
 alias sys="sudo systemctl"
 alias s="sudo"

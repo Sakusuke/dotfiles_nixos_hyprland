@@ -1,8 +1,8 @@
 * {
     border: none;
     border-radius: 0;
-    font-family: "SourceHanSans-Normal","Clear Sans", "Font Awesome 6 Free Solid";
-    font-size: 12px;
+    font-family: "SourceHanSans-Normal","Iosevka Nerd Font", "Font Awesome 6 Free Solid";
+    font-size: 15px;
     min-height: 25px;
 }
 
@@ -14,11 +14,11 @@ window#waybar {
 }
 
 window#waybar.empty {
-    color: rgba(0,0,0,0);
+    color: rgba(120,0,0,0);
 }
 
 .bar {
-    border-bottom: 3px solid rgba(0, 137, 123, 1);
+    border-top: 3px solid rgba(0, 137, 123, 1);
 }
 
 #workspaces button {
@@ -40,6 +40,18 @@ window#waybar.empty {
 #workspaces button.urgent {
     background-color: #eb4d4b;
 }
+
+#workspaces button.visible {
+    color: #00897b;
+}
+
+#workspaces button.occupied {
+    color: #00897b;
+}
+
+/*   #workspaces button.current_output.visible {
+    background: #90b1b1;
+}*/
 
 #mode {
     background-color: #64727D;

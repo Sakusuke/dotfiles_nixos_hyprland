@@ -3,15 +3,19 @@
         "name": "bar",
         "layer": "top",
         "position": "bottom",
-        "height": 10,
-        "modules-left": ["hyprland/window","battery#bat1", "disk", "memory", "cpu", "temperature", "pulseaudio", "backlight", "idle_inhibitor"],
+        "height": 13,
+//        "modules-left": ["hyprland/window","battery#bat1", "disk", "memory", "cpu", "temperature", "pulseaudio", "backlight", "idle_inhibitor"],
+        "modules-left": ["battery#bat1", "temperature", "custom/power-usage", "hyprland/window"],
         "modules-center": ["hyprland/workspaces"],
-        "modules-right": ["network#vpn", "network#wifi", "network#ethernet", "network#disconnected", "custom/weather", "clock", "custom/poweroff"],
+        "modules-right": ["network#wifi", "network#ethernet", "network#disconnected", "pulseaudio", "custom/weather", "clock"],
         "hyprland/window": {
-            "format": "{} ",
+            "format": "{}",
             "on-click": "hyprlandmsg kill"
         },
         "hyprland/workspaces": {
+            "persistent-workspaces": {
+            "*": 5
+            },
             "disable-scroll": true,
             "all-outputs": false,
             "warp-on-scroll": false,
@@ -114,7 +118,7 @@
             "format": "{icon} {volume}%{format_source}",
             "format-bluetooth": "{icon} {volume}%{format_source}",
             "format-bluetooth-muted": " {icon}{format_source}",
-            "format-muted": " {format_source}",
+            "format-muted": "   {format_source}",
             "format-source": "  {volume}%",
             "format-source-muted": " ",
             "format-icons": {
@@ -131,6 +135,9 @@
             "exec": "sh $HOME/.config/waybar/scripts/weather.sh",
             "interval": 300,
             "on-click": "firefox https://wttr.in"
+        },
+        "custom/power-usage": {
+            "exec": "sh $HOME/.config/waybar/scripts/power-usage",
         },
         "custom/poweroff": {
             "tooltip": false,
