@@ -13,8 +13,14 @@
   # Enable networking and bluetooth
   networking.networkmanager.enable = true;
   networking.hostName = "nixos"; # Define your hostname.
+  networking.nameservers = [ "192.168.2.50" ];
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
+
+  # Hosts
+  #networking.extraHosts = ''
+  #  192.168.2.50 jellyfin.optiplex.box
+  #'';
 
   # Kernel
   boot.kernelPackages = pkgs.linuxPackages_latest;
@@ -50,7 +56,7 @@
 
   # Configure keymap in X11
   services.xserver = {
-    layout = "us";
+    layout = "de";
     xkbVariant = "";
   };
 
@@ -58,7 +64,7 @@
   users.users.lap = {
     isNormalUser = true;
     description = "Lap";
-    extraGroups = [ "networkmanager" "wheel" "samba" "brigtness" ];
+    extraGroups = [ "networkmanager" "wheel" "samba" "brigtness" "scanner" "lp" ];
     packages = with pkgs; [];
   };
   users.defaultUserShell = pkgs.zsh;
@@ -66,16 +72,26 @@
   services.getty.autologinUser = "lap";
 
   # List packages installed in system profile. To search, run:
-  nixpkgs.config.allowUnfree = true;
+  nixpkgs.config = {
+    allowUnfree = true;
+    #packageOverrides = pkgs: {
+    #unstable = import (fetchTarball "https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz") {};
+    #};
+  };
+  
   environment.systemPackages = with pkgs; [
     vim 
     wget
     git
     yadm
     gh
+    dig
     pcmanfm
-    firefox
+    #firefox
+    floorp
     mpv
+    jellyfin-mpv-shim
+    jellyfin-media-player
     calibre
     pavucontrol
     foot
@@ -93,9 +109,24 @@
     brightnessctl
     pamixer
     mate.engrampa
+    skanlite
+    sshfs
+    # rust
     cargo
-    #rust
+
+    # bitwarden
+    bitwarden
+    bitwarden-cli
+    #unstable.goldwarden
+
+    # Office
+    libreoffice-qt
+    hunspell
+    hunspellDicts.uk_UA
   ];
+
+  # shitty thing for obsidian
+  nixpkgs.config.permittedInsecurePackages = [ "electron-25.9.0" ];
 
   # battery services
    services.upower.enable = true;
@@ -130,10 +161,17 @@
     };
   };
 
+  # Printers and scanner (add sane and lp group to user)
+  services.printing.enable = true;
+  hardware.sane.enable = true;
+
   # List services that you want to enable:
-   programs.zsh.enable = true;
-   services.openssh.enable = true;
-   programs.steam.enable = true;
+  programs.zsh.enable = true;
+  services.openssh.enable = true;
+  programs.steam.enable = true;
+  security.polkit.enable = true;
+  services.udisks2.enable = true;
+  programs.udevil.enable = true;
 
   # Fonts
   fonts.packages = with pkgs; [
