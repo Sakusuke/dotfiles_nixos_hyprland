@@ -10,9 +10,12 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  # Nix
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
   # Enable networking and bluetooth
   networking.networkmanager.enable = true;
-  networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "lap"; # Define your hostname.
   networking.nameservers = [ "192.168.2.50" ];
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
@@ -28,7 +31,6 @@
   # Set your time zone and Locale
   time.timeZone = "Europe/Berlin";
   services.ntp.enable = true;
-
   i18n.defaultLocale = "en_US.UTF-8";
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "de_DE.UTF-8";
@@ -59,12 +61,21 @@
     layout = "de";
     xkbVariant = "";
   };
+  ## fcitx5
+    # Configure fcitx5
+  i18n.inputMethod = {
+    enabled = "fcitx5";
+    fcitx5.addons = with pkgs; [
+        fcitx5-mozc
+        fcitx5-gtk
+    ];
+  };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.lap = {
     isNormalUser = true;
     description = "Lap";
-    extraGroups = [ "networkmanager" "wheel" "samba" "brigtness" "scanner" "lp" ];
+    extraGroups = [ "networkmanager" "wheel" "samba" "brigtness" "scanner" "lp" "adbusers" ];
     packages = with pkgs; [];
   };
   users.defaultUserShell = pkgs.zsh;
@@ -104,14 +115,14 @@
     htop
     killall
     jq
-    obsidian
     rofi-wayland
     brightnessctl
     pamixer
     mate.engrampa
     skanlite
+    tauon
     sshfs
-    # rust
+    flatpak
     cargo
 
     # bitwarden
@@ -123,10 +134,15 @@
     libreoffice-qt
     hunspell
     hunspellDicts.uk_UA
+
+    # insecure
+    obsidian
+    viber
   ];
 
-  # shitty thing for obsidian
-  nixpkgs.config.permittedInsecurePackages = [ "electron-25.9.0" ];
+  # shitty thing for [ obsidian viber ]
+  nixpkgs.config.permittedInsecurePackages = [ "electron-25.9.0" "openssl-1.1.1w" ];
+
 
   # battery services
    services.upower.enable = true;
@@ -172,6 +188,8 @@
   security.polkit.enable = true;
   services.udisks2.enable = true;
   programs.udevil.enable = true;
+  services.flatpak.enable = true;
+  programs.adb.enable = true;
 
   # Fonts
   fonts.packages = with pkgs; [

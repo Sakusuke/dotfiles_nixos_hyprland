@@ -110,7 +110,7 @@ subs() {
 }
 
 mkscript() {
-  nvim "$1" && chmod +x "$1"
+  vim "$1" && chmod +x "$1"
 }
 
 7e() {
