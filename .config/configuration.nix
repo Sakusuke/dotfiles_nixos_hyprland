@@ -57,9 +57,9 @@
   };
 
   # Configure keymap in X11
-  services.xserver = {
+  services.xserver.xkb = {
     layout = "de";
-    xkbVariant = "";
+    variant = "";
   };
   ## fcitx5
     # Configure fcitx5
@@ -121,6 +121,7 @@
     mate.engrampa
     skanlite
     tauon
+    gpicview
     sshfs
     flatpak
     cargo
