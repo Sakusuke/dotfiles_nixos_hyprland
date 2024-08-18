@@ -1,1 +1,3 @@
-@theme "/nix/store/bnvgq9mvnhvix057k6vfxmkqa2256p27-rofi-1.7.5+wayland2/share/rofi/themes/solarized_alternate.rasi"
+//@theme "/nix/store/bnvgq9mvnhvix057k6vfxmkqa2256p27-rofi-1.7.5+wayland2/share/rofi/themes/solarized_alternate.rasi"
+
+@theme "/nix/store/a552rgsfg856ihq08bxn6dn41wj82m4j-rofi-1.7.5+wayland3/share/rofi/themes/gruvbox-light-hard.rasi"

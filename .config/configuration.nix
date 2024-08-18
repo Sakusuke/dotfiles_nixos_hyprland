@@ -6,12 +6,19 @@
       ./hardware-configuration.nix
     ];
 
+  # Nix
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  # Nix
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  # Kernel Modules
+  ## all three lines for DSLR Webcam with Gphoto2
+  boot.extraModulePackages = with config.boot.kernelPackages;
+    [ v4l2loopback.out ];
+  boot.kernelModules = [ "v4l2loopback" ];
+  boot.extraModprobeConfig = '' options v4l2loopback exclusive_caps=1 card_label="Virtual Camera" '';
 
   # Enable networking and bluetooth
   networking.networkmanager.enable = true;
@@ -75,7 +82,7 @@
   users.users.lap = {
     isNormalUser = true;
     description = "Lap";
-    extraGroups = [ "networkmanager" "wheel" "samba" "brigtness" "scanner" "lp" "adbusers" ];
+    extraGroups = [ "networkmanager" "wheel" "samba" "brigtness" "scanner" "lp" "adbusers" "davfs2" ];
     packages = with pkgs; [];
   };
   users.defaultUserShell = pkgs.zsh;
@@ -98,9 +105,11 @@
     gh
     dig
     pcmanfm
-    #firefox
-    floorp
+    firefox
+    #floorp
     mpv
+    digikam
+    discord
     jellyfin-mpv-shim
     jellyfin-media-player
     calibre
@@ -120,11 +129,23 @@
     pamixer
     mate.engrampa
     skanlite
+    haskellPackages.youtube
     tauon
     gpicview
     sshfs
     flatpak
     cargo
+    davfs2 # `usermod -aG davfs2 <username>` or add group further down
+
+    # webcam
+    gphoto2
+    ffmpeg
+    udiskie
+
+    # games
+    wineWowPackages.waylandFull
+    winetricks
+    lutris
 
     # bitwarden
     bitwarden
@@ -139,6 +160,7 @@
     # insecure
     obsidian
     viber
+    lutris
   ];
 
   # shitty thing for [ obsidian viber ]
@@ -188,6 +210,7 @@
   programs.steam.enable = true;
   security.polkit.enable = true;
   services.udisks2.enable = true;
+  services.gvfs.enable = true;
   programs.udevil.enable = true;
   services.flatpak.enable = true;
   programs.adb.enable = true;
@@ -197,6 +220,7 @@
     (nerdfonts.override { fonts = [ "Iosevka" ]; })
     noto-fonts-cjk
     source-han-sans
+    corefonts vistafonts #windows fonts
   ];
 
   system.stateVersion = "23.11"; # Did you read the comment?
