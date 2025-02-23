@@ -56,7 +56,7 @@
   
   # Audio
   security.rtkit.enable = true;
-  sound.enable = true;
+  #sound.enable = true; deprecated on nix
   services.pipewire = {
     enable = true;
     alsa.enable = true;
@@ -131,16 +131,21 @@
     skanlite
     haskellPackages.youtube
     tauon
-    gpicview
+    #gpicview deprecated on nix
     sshfs
     flatpak
     cargo
     davfs2 # `usermod -aG davfs2 <username>` or add group further down
+    # file
+    p7zip
+    vimv
 
     # webcam
     gphoto2
     ffmpeg
     udiskie
+    krita
+    sxiv
 
     # games
     wineWowPackages.waylandFull
@@ -214,11 +219,13 @@
   programs.udevil.enable = true;
   services.flatpak.enable = true;
   programs.adb.enable = true;
+  #hardware.xone.enable = true;
 
   # Fonts
   fonts.packages = with pkgs; [
-    (nerdfonts.override { fonts = [ "Iosevka" ]; })
-    noto-fonts-cjk
+    #(nerdfonts.override { fonts = [ "Iosevka" ]; })
+    nerd-fonts.iosevka
+    noto-fonts-cjk-sans
     source-han-sans
     corefonts vistafonts #windows fonts
   ];
