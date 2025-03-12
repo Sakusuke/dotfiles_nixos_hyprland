@@ -220,6 +220,7 @@
   services.flatpak.enable = true;
   programs.adb.enable = true;
   #hardware.xone.enable = true;
+  programs.java = { enable = true; }; #package = pkgs.oraclejre8; }; # Java for MtG forge
 
   # Fonts
   fonts.packages = with pkgs; [
