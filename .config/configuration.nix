@@ -125,6 +125,7 @@
     killall
     jq
     rofi-wayland
+    wl-clipboard-rs
     brightnessctl
     pamixer
     mate.engrampa
